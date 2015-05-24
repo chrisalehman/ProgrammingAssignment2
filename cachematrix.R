@@ -7,34 +7,34 @@
 ## 3. setsolve(s): caches a matrix inverse
 ## 4. getsolve(): fetches a matrix inverse
 makeCacheMatrix <- function(x = matrix()) {
-  s <- NULL
-  # sets the new matrix and purges the inverse from the cache
-  set <- function(m) {
-    x <<- m
-    s <<- NULL
-  }
-  get <- function() x
-  setsolve <- function(solve) s <<- solve
-  getsolve <- function() s
-  list(
-    set = set, 
-    get = get, 
-    setsolve = setsolve, 
-    getsolve = getsolve
-  )
+        s <- NULL
+        # sets the new matrix and purges the inverse from the cache
+        set <- function(m) {
+                x <<- m
+                s <<- NULL
+        }
+        get <- function() x
+        setsolve <- function(solve) s <<- solve
+        getsolve <- function() s
+        list(
+                set = set,
+                get = get,
+                setsolve = setsolve,
+                getsolve = getsolve
+        )
 }
 
 ## Takes the "special matrix" produced by makeCacheMatrix() and caches the computed inverse. If the inverse has already 
 ## been computed (and the cached matrix has not changed via $set), then cacheSolve retrieves the cached inverse instead
 ## recomputing it.
 cacheSolve <- function(x, ...) {
-  s <- x$getsolve()
-  if (!is.null(s)) {
-    message("getting cached data")
-    return(s)
-  }
-  data <- x$get()
-  s <- solve(data, ...)
-  x$setsolve(s)
-  s
+        s <- x$getsolve()
+        if (!is.null(s)) {
+                message("getting cached data")
+                return(s)
+        }
+        data <- x$get()
+        s <- solve(data, ...)
+        x$setsolve(s)
+        s
 }
